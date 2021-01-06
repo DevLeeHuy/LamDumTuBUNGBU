@@ -1,0 +1,233 @@
+<html>
+<!DOCTYPE html>
+<head>
+    <title>Control</title>
+    <style>
+
+	h1 {
+		color: white;
+		text-align: center;
+	}
+	.class1 {
+	  position: relative;
+	  margin-left: 210px;
+	  border: 3px solid #73AD21;
+	}
+	.class2 {
+	  position: relative;
+	  margin-left: 207px;
+	  border: 3px solid #73AD21;
+	}
+	.class3 {
+	  position: relative;
+	  margin-left: 196px;
+	  border: 3px solid #73AD21;
+	}
+	.classGND {
+	  position: relative;
+	  margin-left: 45%;
+	}
+
+	.class11 {
+	  position: relative;
+	  margin-left: 30%;
+	  margin-right:30%;
+	}
+	img{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		border-radius: 50%;
+	}
+
+	.congtac h2{
+		display: flex;
+		justify-content: space-between;
+	}
+	</style>
+	<script type="text/javascript">
+		function CDClick()
+			{
+				if (document.getElementById('buttonCD').value=='Thủ công')
+				{
+					document.getElementById('buttonCD').value='Tự động';
+					document.getElementById('buttonL1').disabled = true;	
+					document.getElementById('buttonQ1').disabled = true;	
+					firebase.database().ref('project6').update({
+	              	Chedo: "1"
+          		});
+				return false;
+				}
+				else
+				{
+					document.getElementById('buttonCD').value='Thủ công';
+					document.getElementById('buttonL1').disabled = false;	
+					document.getElementById('buttonQ1').disabled = false;	
+					firebase.database().ref('project6').update({
+              		Chedo: "0"
+              		
+          		});
+				return false;
+				}
+			}
+		function L1Click()
+			{
+				if (document.getElementById('buttonL1').value=='OFF')
+				{
+					document.getElementById('buttonL1').value='ON';
+					firebase.database().ref('project6').update({
+	              	Led:"1"
+          		});
+				return false;
+				}
+				else
+				{
+					document.getElementById('buttonL1').value='OFF';
+					firebase.database().ref('project6').update({
+              		Led:"0"
+          		});
+				return false;
+				}
+			}		
+
+		function Q1Click()
+			{
+				if (document.getElementById('buttonQ1').value=='OFF')
+				{
+					document.getElementById('buttonQ1').value='ON';
+					firebase.database().ref('project6').update({
+	              	Quat:"1"
+          		});
+				return false;
+				}
+				else
+				{
+					document.getElementById('buttonQ1').value='OFF';
+					firebase.database().ref('project6').update({
+              		Quat:"0"
+          		});
+				return false;
+				}
+			}	
+		function doorClick(){
+			if (document.getElementById('buttonCua').value=='LOCK')
+				{
+					document.getElementById('buttonCua').value='OPEN';
+					document.getElementById('buttonCua').classList.add("btn-success");
+					firebase.database().ref('project6').update({
+	              	Cua:"1"
+          		});
+				}
+				else
+				{
+					document.getElementById('buttonCua').value='LOCK';
+					document.getElementById('buttonCua').classList.remove("btn-success");
+					firebase.database().ref('project6').update({
+              		Cua:"0"
+          		});
+				}
+		}		
+	</script>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body class="class11" style="background-color:lightblue;">
+ 
+
+	<h1>Mạch điều khiển cảnh báo theo nhiệt độ, ánh sáng</h1>
+    <i class="glyphicon glyphicon-cloud" style="font-size:24px;"></i>
+	<img src="file.jpg" width="270px" height="180px">  <br><hr>
+	<h2>Nhiệt độ: <span class="label label-default" id="root1"></span></h2>
+	<h2>Ánh sáng: <span class="label label-default" id="root2"></span></h2>
+<div class="congtac mt-5">
+	<h2>Mở/Đóng Cửa <input type="button" class="btn  btn-secondary   " value="LOCK" id="buttonCua" onclick="doorClick();"></input></h2>
+	<h2>Chế độ <input type="button" class="btn btn-primary " value="Thủ công" id="buttonCD" onclick="CDClick();"></input></h2>
+	<h2>Chế độ đèn: <input type="button" class="btn btn-warning " value="OFF" id="buttonL1" onclick="L1Click();"></input></h2>
+	<h2>Quạt <input type="button" class="btn btn-success " value="OFF" id="buttonQ1" onclick="Q1Click();"></input></h2>
+</div>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
+    <script>
+
+	var firebaseConfig = {
+		apiKey: "AIzaSyALQsQN7fpS6GF1tQQGzCKLjFHlF-7aG3M",
+		authDomain: "camtu-a8a62.firebaseapp.com",
+		databaseURL: "https://camtu-a8a62-default-rtdb.firebaseio.com",
+		projectId: "camtu-a8a62",
+		storageBucket: "camtu-a8a62.appspot.com",
+		messagingSenderId: "566933318471",
+		appId: "1:566933318471:web:1357767821a70f61547a62",
+		measurementId: "G-7B4JMK9VSY"
+	  };
+  
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var firebaseRef = firebase.database().ref("/project6/Chedo");
+	      	firebaseRef.on("value",function(snapshot){
+	        var data20 = snapshot.val();
+	        if (data20 == 1)
+	        {	
+	        	document.getElementById('buttonL1').disabled = true;	
+				document.getElementById('buttonQ1').disabled = true;	
+	        	document.getElementById('buttonCD').value='Tự động';
+
+	        }
+	        else
+	        {
+	        	document.getElementById('buttonL1').disabled = false;	
+				document.getElementById('buttonQ1').disabled = false;	
+	        	document.getElementById('buttonCD').value='Thủ công';
+	        }
+	        console.log(data2);
+      		})
+      var firebaseRef = firebase.database().ref("/project6/Led");
+	      	firebaseRef.on("value",function(snapshot){
+	        var data1 = snapshot.val();
+	        if (data1 == 1)
+	        {
+	        	document.getElementById('buttonL1').value='ON';
+	        }
+	        else
+	        {
+	        	document.getElementById('buttonL1').value='OFF';
+	        }
+	        console.log(data2);
+      		})
+
+      	var firebaseRef = firebase.database().ref("/project6/Quat");
+	      	firebaseRef.on("value",function(snapshot){
+	        var data2 = snapshot.val();
+	        if (data2 == 1)
+	        {
+	        	document.getElementById('buttonQ1').value='ON';
+	        }
+	        else
+	        {
+	        	document.getElementById('buttonQ1').value='OFF';
+	        }
+	        console.log(data1);
+      		})
+      	
+		var firebaseRef = firebase.database().ref("/project6/Nhietdo");
+		firebaseRef.on("value",function(snapshot){
+			var data9 = snapshot.val();
+			console.log(data9);
+			document.querySelector('#root1').innerHTML = `
+			${data9} °C
+			`
+		})
+		var firebaseRef = firebase.database().ref("/project6/Anhsang");
+		firebaseRef.on("value",function(snapshot){
+			var data10 = snapshot.val();
+			console.log(data10);
+			document.querySelector('#root2').innerHTML = `
+			${data10} %
+			`
+		})
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Đăng nhập</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			background: url(bgr4.jpg);
+			background-size: cover;
+			background-position: center;
+		}
+		form{
+			width: 600px;
+			margin: 200px auto;
+			height: 500px;
+
+		}
+		.xong{
+			color: rgb(0, 143, 36);
+		}
+		.div1{
+			width: 100%;
+			margin: 15px auto;
+		}
+		label{
+			display: block;
+			padding: 20px;
+			/* font-size: 25px; */
+		}
+		
+		.log-in{
+			
+			padding: 10px;
+			width: 150px;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			border-radius: 10px;
+			font-size: 20px;
+			font-weight: bold;
+			color: whitesmoke;
+			background: linear-gradient(90deg, royalblue, lightgreen);
+		}
+		span{
+			display: block;
+			margin-left: 20px;
+			color: red;
+			font-size: italic;
+		}
+		.cover{
+			width: 400px;
+			height: 120px;
+			background: linear-gradient(to bottom, #33ccff 8%, #ff33cc 100%);
+			margin: 10px;
+			padding: 10px;
+			border-radius: 40px;
+			text-align: center;
+		}
+		#LocalDate, #LocalClock{
+			font-weight: bold;
+			font-size: 35px;
+			color: antiquewhite;
+			letter-spacing: 4px;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.up{
+			color: white;
+		}
+	</style>
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+	<div class="cover">
+		<p id="LocalClock">--:--:--</p>	
+		<p id="LocalDate">----/--/--</p>
+	</div>
+	<script type="text/javascript">
+		function LocalTime(){
+			var date = new Date();
+			var time = date.toLocaleTimeString();
+			var year = date.toISOString().split('T')[0];
+
+			document.getElementById('LocalClock').innerHTML = time;
+			document.getElementById('LocalDate').innerHTML = year;
+		}
+		setInterval(()=>{
+			LocalTime();
+		}, 1000);
+	</script>
+	<form action="sh.html" method="POST">
+		<div class="form-floating mb-3 ">
+			<input type="text" class="form-control" id="username" placeholder="nhap ten dang nhap">
+			<label for="username">Name ID</label>
+			<span></span>
+		  </div>
+		  <div class="form-floating mb-3" >
+			<input type="password" class="form-control" id="password" placeholder="Password">
+			<label for="password">Password</label>
+			<span></span>
+		  </div>
+		
+	
+		<button class="log-in" id="log-in">Đăng nhập</button>
+		<button class="log-in "  style="margin-left: 18rem;"type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đổi mật khẩu</button>
+	</form>
+
+	  
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				  <div class="form-floating mb-3" >
+					<input type="password" class="form-control" id="mkCu" placeholder="Password cũ">
+					<label for="password"> Password cũ</label>
+					<span></span>
+				  </div>
+				  <div class="form-floating mb-3 ">
+					<input type="text" class="form-control" id="mkMoi" placeholder="Mật khẩu mới">
+					<label for="username">Mật khẩu mới</label>
+					<span></span>
+				  </div>
+				  <div class="form-floating mb-3" >
+					<input type="password" class="form-control" id="confirm" placeholder="Xác nhận mật khẩu mới">
+					<label for="password">Xác nhận mật khẩu mới</label>
+					<span></span>
+				  </div>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary doi-mk">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+</body>
+</html>
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDKmMzMhD4Z2olL7ykW_Zt4rHhs74kxq8o",
+    authDomain: "tunai-f58ee.firebaseapp.com",
+    databaseURL: "https://tunai-f58ee-default-rtdb.firebaseio.com",
+    projectId: "tunai-f58ee",
+    storageBucket: "tunai-f58ee.appspot.com",
+    messagingSenderId: "267973621757",
+    appId: "1:267973621757:web:b1b038ea9294143c178b94",
+    measurementId: "G-MXB54NZJW8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+	var input = document.getElementsByTagName('input');
+	var login = document.getElementById('log-in');
+	var form  = document.querySelector('form');
+	var firebaseUserName = firebase.database().ref("/admin/userName");
+	var firebasePass = firebase.database().ref("/admin/password");
+	var username = 'admin';
+	 firebaseUserName.once("value").then((snapshot)=>{
+		username =  snapshot.val() || "admin";
+	});
+	var password = 'admin';
+	 firebasePass.once("value").then((snapshot)=>{
+		password =  snapshot.val() || "admin";
+	});
+
+	setTimeout(()=>{
+		console.log(username);
+	console.log(password);
+	},3000);
+	
+	form.onsubmit = () => {return false}
+
+	login.onclick = ()=>
+	{
+		if((input[0].value !="")&&(input[1].value != "")) 
+		{
+			if((input[0].value ==username)&& (input[1].value == password))
+			{
+				form.onsubmit = () => {return true}
+				document.cookie = "username" + input[0].value;
+				document.cookie = "password" + input[1].value;
+			}
+			else
+			{
+				
+					input[0].nextElementSibling.textContent="Sai tài khoản hoặc mật khẩu";
+					setTimeout(()=>{
+						input[0].nextElementSibling.textContent="";
+
+					},2000);
+				
+			}
+		}
+		else
+		{
+			if(input[0].value =="")
+			{
+				input[0].nextElementSibling.textContent="Chưa điền tên đăng nhập";
+				setTimeout(()=>{
+					input[0].nextElementSibling.textContent="";
+
+				},2000);
+			}
+			if(input[1].value =="")
+			{
+				input[1].nextElementSibling.textContent="Chưa điền mật khẩu";
+				setTimeout(()=>{
+					input[1].nextElementSibling.textContent="";
+
+				},2000);
+			}
+		}
+	}
+	/*Đổi mật khẩu*/
+	var doiMk = document.querySelector(".doi-mk");
+	doiMk.addEventListener('click',()=>{
+		let mkCu = document.querySelector("#mkCu");
+		let mkMoi = document.querySelector("#mkMoi");
+		let confirm = document.querySelector("#confirm");
+	
+		if(mkMoi.value != null && mkCu.value != null && confirm.value != null)
+		{
+			if(mkCu.value != password || mkMoi.value != confirm.value ){
+
+			}
+			else{
+				firebase.database().ref('admin').update({
+						password: `${mkMoi.value}`
+					});
+				document.querySelector(".modal-body").innerHTML=`
+					<div class="xong"><i class="fa fa-check" aria-hidden="true"></i> DONE</div>
+				`
+			}
+		}
+		else{
+			
+		}
+	});
+</script>
