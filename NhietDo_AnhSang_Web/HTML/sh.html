@@ -44,6 +44,10 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	.thongso{
+		color: deeppink;
+		margin-left: 20px ;
+	}
 	</style>
 	<script type="text/javascript">
 		function CDClick()
@@ -114,17 +118,20 @@
 				{
 					document.getElementById('buttonCua').value='OPEN';
 					document.getElementById('buttonCua').classList.add("btn-success");
+
 					firebase.database().ref('project6').update({
-	              	Cua:"1"
-          		});
+	              	Door:"0"
+				  });
+				  return false;
 				}
 				else
 				{
 					document.getElementById('buttonCua').value='LOCK';
 					document.getElementById('buttonCua').classList.remove("btn-success");
 					firebase.database().ref('project6').update({
-              		Cua:"0"
-          		});
+              		Door:"1"
+				  });
+				  return false;
 				}
 		}		
 	</script>
@@ -134,7 +141,8 @@
 <body class="class11" style="background-color:lightblue;">
  
 
-	<h1>Mạch điều khiển cảnh báo theo nhiệt độ, ánh sáng</h1>
+	<h1>Mô phỏng Kit nhúng trên web server</h1>
+	<h2>Điều khiển một vài thiết bị nhỏ trong nhà</h2>
     <i class="glyphicon glyphicon-cloud" style="font-size:24px;"></i>
 	<img src="file.jpg" width="270px" height="180px">  <br><hr>
 	<h2>Nhiệt độ: <span class="label label-default" id="root1"></span></h2>
@@ -150,19 +158,19 @@
 	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
     <script>
 
-	var firebaseConfig = {
-		apiKey: "AIzaSyALQsQN7fpS6GF1tQQGzCKLjFHlF-7aG3M",
-		authDomain: "camtu-a8a62.firebaseapp.com",
-		databaseURL: "https://camtu-a8a62-default-rtdb.firebaseio.com",
-		projectId: "camtu-a8a62",
-		storageBucket: "camtu-a8a62.appspot.com",
-		messagingSenderId: "566933318471",
-		appId: "1:566933318471:web:1357767821a70f61547a62",
-		measurementId: "G-7B4JMK9VSY"
-	  };
-  
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
+ var firebaseConfig = {
+    apiKey: "AIzaSyDKmMzMhD4Z2olL7ykW_Zt4rHhs74kxq8o",
+    authDomain: "tunai-f58ee.firebaseapp.com",
+    databaseURL: "https://tunai-f58ee-default-rtdb.firebaseio.com",
+    projectId: "tunai-f58ee",
+    storageBucket: "tunai-f58ee.appspot.com",
+    messagingSenderId: "267973621757",
+    appId: "1:267973621757:web:b1b038ea9294143c178b94",
+    measurementId: "G-MXB54NZJW8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
       var firebaseRef = firebase.database().ref("/project6/Chedo");
 	      	firebaseRef.on("value",function(snapshot){
@@ -215,7 +223,7 @@
 			var data9 = snapshot.val();
 			console.log(data9);
 			document.querySelector('#root1').innerHTML = `
-			${data9} °C
+			<span  class="thongso">${data9} °C</span>
 			`
 		})
 		var firebaseRef = firebase.database().ref("/project6/Anhsang");
@@ -223,9 +231,22 @@
 			var data10 = snapshot.val();
 			console.log(data10);
 			document.querySelector('#root2').innerHTML = `
-			${data10} %
+			<span  class="thongso">${data10} %</span>
 			`
 		})
+		var firebaseRef = firebase.database().ref("/project6/Door");
+	      	firebaseRef.on("value",function(snapshot){
+	        var data1 = snapshot.val();
+	        if (data1 == 1)
+	        {
+	        	document.getElementById('buttonCua').value='OPEN';
+	        }
+	        else
+	        {
+	        	document.getElementById('buttonCua').value='LOCK';
+	        }
+	        console.log(data2);
+      		})
 
     </script>
     
